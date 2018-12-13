@@ -11,11 +11,17 @@ marcadorModulo = (function () {
         en la posición pasada por parámetro y mostrarlo en el mapa.
         Este marcador debe tener un título, una animación.
         El marcador que vas a crear debe asignarse a la variable miMarcador */
+        this.miMarcador = new google.maps.Marker ({
+          position: ubicacion,
+          map: map,
+          animation: google.maps.animation.DROP,
+          title: document.getElementById('direccion').value
+        })
   }
 
     // Agrega la dirección del marcador en la lista de Lugares Intermedios
   function agregarDireccionMarcador (marcador) {
-        // console.log(marcador.getPosition().lat() + ',' + marcador.getPosition().lng());
+        //console.log(marcador.getPosition().lat() + ',' + marcador.getPosition().lng());
     var marcadorLatLng = new google.maps.LatLng({ lat: marcador.getPosition().lat(), lng: marcador.getPosition().lng() })
     direccionesModulo.agregarDireccion(marcador.getTitle(), marcadorLatLng)
   }
