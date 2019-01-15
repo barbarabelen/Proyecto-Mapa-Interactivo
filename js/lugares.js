@@ -49,7 +49,7 @@ lugaresModulo = (function () {
     servicio.nearbySearch({
       location: posicion,
       radius: 1500,
-      type: tipoDeLugar //por qué harían falta los corchetes?
+      type: [tipoDeLugar]
     }, function (results, status) {
       marcadorModulo.marcarLugares(results, status)
     })
