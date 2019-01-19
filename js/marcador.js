@@ -16,8 +16,8 @@ marcadorModulo = (function () {
           position: ubicacion,
           map: mapa,
           animation: google.maps.Animation.DROP,
-          title: 'Hello World!'
-          //title: document.getElementById('direccion').value
+          //title: 'Hello World!'
+          title: document.getElementById('direccion').value
         });
   }
 
