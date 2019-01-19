@@ -1,6 +1,32 @@
 geocodificadorModulo = (function () {
   let geocodificador // Geocodificador que dada una dirección devuelve una coordenada
 
+// Promise para resolver direcciones
+function resolverDireccion(direccion){
+  return new Promise(function(resolve, reject){
+    const circulo = new google.maps.Circle( {
+      center: posicionCentral,
+      radius: 20000
+    });
+
+    const request = {
+      address: direccion,
+      bounds: circulo.getBounds()
+    }
+
+    geocodificador.geocode(request,function(response){
+      const place = response[0]
+      const ubicacion = place.geometry.location
+      resolve({
+        direccion: direccion,
+        ubicacion: ubicacion
+      })
+    })
+
+  })
+
+}
+
   // Permite obtener las coordenadas y las usa con la función llamada por parámtero
   function usaDireccion(direccion, funcionALlamar) {
     /* Completar la función usaDireccion(dirección,funcionALlamar)
@@ -9,18 +35,28 @@ geocodificadorModulo = (function () {
      dirección: la dirección pasada por parámetro
      coordenada: la ubicación de tipo google.maps.LatLng */
 
-    if (direccion) {
-      geocodificador.geocode({address: direccion}, function (results, status) {
-          
-        if (status === 'OK') {
-            let coordenadas = results[0].geometry.location;
-            funcionALlamar(direccion, coordenadas);
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          };
+    
+    const circulo = new google.maps.Circle( {
+      center: posicionCentral,
+      radius: 20000
+    });
 
-        })
+    const request = {
+      address: direccion,
+      bounds: circulo.getBounds()
     }
+
+    geocodificador.geocode(request,function(response){
+      const place = response[0]
+      funcionALlamar(direccion,place.geometry.location)
+    })
+
+    /* Completar la función usaDireccion(dirección,funcionALlamar)
+ para que se obtengan las coordenadas a partir de la dirección pasada por parámetro
+ y que llame a la función pasada por parámetro con los siguientes parámetros
+ dirección: la dirección pasada por parámetro
+ coordenada: la ubicación de tipo google.maps.LatLng */
+
   }
 
   // Inicializo el geocoder que obtiene las corrdenadas a partir de una dirección
@@ -43,6 +79,7 @@ geocodificadorModulo = (function () {
 
   return {
     usaDireccion,
-    inicializar
+    inicializar,
+    resolverDireccion
   }
 })()

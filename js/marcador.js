@@ -7,6 +7,7 @@ marcadorModulo = (function () {
 
     // Crea un marcador y lo muestra en el mapa
   function mostrarMiMarcador (ubicacion) {
+   
         /* Completar la función mostrarMiMarcador() para crear un marcador
         en la posición pasada por parámetro y mostrarlo en el mapa.
         Este marcador debe tener un título, una animación.
@@ -14,10 +15,10 @@ marcadorModulo = (function () {
         miMarcador = new google.maps.Marker ({
           position: ubicacion,
           map: mapa,
-          animation: google.maps.animation.DROP,
+          animation: google.maps.Animation.DROP,
           title: 'Hello World!'
           //title: document.getElementById('direccion').value
-        })
+        });
   }
 
     // Agrega la dirección del marcador en la lista de Lugares Intermedios
@@ -185,6 +186,7 @@ marcadorModulo = (function () {
     // Al hacer click en el marcador se fija el StreetView en la posición de este.
   function agregarMarcadorRuta (direccion, letra, esInicial) {
     borrarMarcadores(marcadoresRuta)
+    
 
     var zIndice = 1
     if (esInicial) {
