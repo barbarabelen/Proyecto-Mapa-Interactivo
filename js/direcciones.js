@@ -92,11 +92,41 @@ direccionesModulo = (function () {
     // Calcula la ruta entre los puntos Desde y Hasta con los puntosIntermedios
     // dependiendo de la formaDeIr que puede ser Caminando, Auto o Bus/Subterraneo/Tren
   function calcularYMostrarRutas () {
+    let desde = document.querySelector('#desde').value;
+    let hasta = document.querySelector('#hasta').value;
+    //let comoIr = document.querySelector('#comoIr').value;
+    let puntosIntermedios = document.querySelector('#puntosIntermedios').value;
+    let waypoints = [];
 
-        /* Completar la función calcularYMostrarRutas , que dependiendo de la forma en que el
-         usuario quiere ir de un camino al otro, calcula la ruta entre esas dos posiciones
-         y luego muestra la ruta. */
+    for (let i = 0; i < puntosIntermedios.length; i++) {
+      if(puntosIntermedios[i].selected){
+        waypoints.push({
+          location: puntosIntermedios[i].value,
+          stopoever: true,
+        })
+      }      
+    }
   }
+
+  marcadorModulo.agregarMarcadorRuta(desde, hasta, waypoints.map(obj => obj.location));
+  
+  let travelMode = document.getElementById('comoIr').value;
+
+  let request = {
+    origin: desde,
+    destination: hasta,
+    travelMode: google.maps.travelMode[travelMode],
+    waypoints: waypoints,
+    optimizeWaypoints: true
+  };
+
+  marcadorModulo.mostrarMiMarcador();
+
+  directionsService.route(request, function(result, status){
+    if (status === 'OK') {
+      mostradorDirecciones.setDirections(result);
+    }
+  });
 
   return {
     inicializar,
