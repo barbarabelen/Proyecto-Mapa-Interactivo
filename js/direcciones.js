@@ -94,19 +94,18 @@ direccionesModulo = (function () {
   function calcularYMostrarRutas () {
     let desde = document.querySelector('#desde').value;
     let hasta = document.querySelector('#hasta').value;
-    //let comoIr = document.querySelector('#comoIr').value;
-    let puntosIntermedios = document.querySelector('#puntosIntermedios').value;
+    var $op = $('#puntosIntermedios option:selected')
+    //let puntosIntermedios = document.querySelector('#puntosIntermedios').value;
     let waypoints = [];
 
-    for (let i = 0; i < puntosIntermedios.length; i++) {
-      if(puntosIntermedios[i].selected){
+    if ($op.length) {
+      for (let i = 0; i < $op.length; i++) {
         waypoints.push({
-          location: puntosIntermedios[i].value,
-          stopoever: true,
+          location: $op[i].textContent,
+          stopover: true
         })
-      }      
+      }
     }
-  }
 
   marcadorModulo.agregarMarcadorRuta(desde, hasta, waypoints.map(obj => obj.location));
   
@@ -122,11 +121,12 @@ direccionesModulo = (function () {
 
   marcadorModulo.mostrarMiMarcador();
 
-  directionsService.route(request, function(result, status){
+  servicioDirecciones.route(request, function(result, status){
     if (status === 'OK') {
       mostradorDirecciones.setDirections(result);
     }
   });
+  }
 
   return {
     inicializar,
