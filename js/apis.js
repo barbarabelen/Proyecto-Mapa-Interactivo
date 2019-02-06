@@ -19,5 +19,6 @@ function inicializarMapa() {
   marcadorModulo.inicializar()
   direccionesModulo.inicializar()
   lugaresModulo.inicializar()
+  debugger
   streetViewModulo.inicializar()
 }
